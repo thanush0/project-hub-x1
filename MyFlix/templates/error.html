@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+
+{% block title %}Error - MyFlix{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="error-page">
+        <div class="error-icon">❌</div>
+        <h1 class="error-code">{{ code or 'Error' }}</h1>
+        <h2 class="error-title">Oops! Something went wrong</h2>
+        <p class="error-message">{{ error or 'An unexpected error occurred' }}</p>
+        
+        <div class="error-actions">
+            <a href="/" class="btn-primary">Go Home</a>
+            <button onclick="history.back()" class="btn-secondary">Go Back</button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .error-page {
+        text-align: center;
+        padding: 100px 20px;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .error-icon {
+        font-size: 80px;
+        margin-bottom: 20px;
+        animation: shake 0.5s;
+    }
+    
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-10px); }
+        75% { transform: translateX(10px); }
+    }
+    
+    .error-code {
+        font-size: 4em;
+        font-weight: 700;
+        color: #e50914;
+        margin: 0;
+    }
+    
+    .error-title {
+        font-size: 2em;
+        margin: 20px 0;
+        color: #fff;
+    }
+    
+    .error-message {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 1.1em;
+        line-height: 1.6;
+        margin-bottom: 40px;
+    }
+    
+    .error-actions {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .btn-primary, .btn-secondary {
+        padding: 12px 30px;
+        border-radius: 4px;
+        font-size: 16px;
+        cursor: pointer;
+        border: none;
+        text-decoration: none;
+        transition: all 0.3s;
+        display: inline-block;
+    }
+    
+    .btn-primary {
+        background: #e50914;
+        color: white;
+    }
+    
+    .btn-primary:hover {
+        background: #f40612;
+    }
+    
+    .btn-secondary {
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .btn-secondary:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    
+    @media (max-width: 768px) {
+        .error-code {
+            font-size: 3em;
+        }
+        
+        .error-title {
+            font-size: 1.5em;
+        }
+    }
+</style>
+{% endblock %}

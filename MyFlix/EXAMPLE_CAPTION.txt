@@ -1,0 +1,146 @@
+Example Movie Caption Format for Telegram Uploads
+===================================================
+
+Copy and paste this template when uploading movies to your Telegram channel.
+Replace the values with your movie's actual information.
+
+===================================================
+TEMPLATE
+===================================================
+
+Title: Movie Title Here
+Year: 2024
+Genre: Action, Thriller, Drama
+Rating: 8.5
+Description: Brief description of the movie plot. You can write multiple lines here to provide more details about the storyline, cast, and any other relevant information.
+
+===================================================
+REAL EXAMPLES
+===================================================
+
+Example 1: Action Movie
+-----------------------
+Title: Mad Max: Fury Road
+Year: 2015
+Genre: Action, Adventure, Sci-Fi
+Rating: 8.1
+Description: In a post-apocalyptic wasteland, a woman rebels against a tyrannical ruler in search for her homeland with the aid of a group of female prisoners, a psychotic worshiper, and a drifter named Max.
+
+
+Example 2: Drama
+-----------------------
+Title: The Shawshank Redemption
+Year: 1994
+Genre: Drama
+Rating: 9.3
+Description: Two imprisoned men bond over a number of years, finding solace and eventual redemption through acts of common decency.
+
+
+Example 3: Comedy
+-----------------------
+Title: The Grand Budapest Hotel
+Year: 2014
+Genre: Comedy, Drama, Adventure
+Rating: 8.1
+Description: A writer encounters the owner of an aging high-class hotel, who tells him of his early years serving as a lobby boy in the hotel's glorious years under an exceptional concierge.
+
+
+Example 4: Horror
+-----------------------
+Title: The Conjuring
+Year: 2013
+Genre: Horror, Mystery, Thriller
+Rating: 7.5
+Description: Paranormal investigators Ed and Lorraine Warren work to help a family terrorized by a dark presence in their farmhouse.
+
+
+Example 5: Sci-Fi
+-----------------------
+Title: Interstellar
+Year: 2014
+Genre: Sci-Fi, Drama, Adventure
+Rating: 8.6
+Description: A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.
+
+
+Example 6: Animated
+-----------------------
+Title: Spider-Man: Into the Spider-Verse
+Year: 2018
+Genre: Animation, Action, Adventure
+Rating: 8.4
+Description: Teen Miles Morales becomes Spider-Man of his reality, crossing his path with five counterparts from other dimensions to stop a threat for all realities.
+
+
+Example 7: TV Series Episode
+-----------------------
+Title: Breaking Bad - S01E01 - Pilot
+Year: 2008
+Genre: Crime, Drama, Thriller
+Rating: 9.5
+Description: High school chemistry teacher Walter White's life is suddenly transformed by a dire medical diagnosis. Street-savvy former student Jesse Pinkman "teaches" Walter a new trade.
+
+
+Example 8: Documentary
+-----------------------
+Title: Planet Earth II
+Year: 2016
+Genre: Documentary, Nature
+Rating: 9.5
+Description: Wildlife documentary series with David Attenborough, beginning with a look at the remote islands which offer sanctuary to some of the planet's rarest creatures.
+
+
+Example 9: Indian Movie
+-----------------------
+Title: Dangal
+Year: 2016
+Genre: Action, Biography, Drama
+Rating: 8.4
+Description: Former wrestler Mahavir Singh Phogat and his two wrestler daughters struggle towards glory at the Commonwealth Games in the face of societal oppression.
+
+
+Example 10: Anime Movie
+-----------------------
+Title: Your Name (Kimi no Na wa)
+Year: 2016
+Genre: Animation, Drama, Fantasy
+Rating: 8.4
+Description: Two strangers find themselves linked in a bizarre way. When a connection forms, will distance be the only thing to keep them apart?
+
+
+===================================================
+FIELD EXPLANATIONS
+===================================================
+
+Title:       The name of the movie/show (required)
+Year:        Release year in YYYY format (required)
+Genre:       One or more genres, separated by commas (required)
+Rating:      IMDb rating, Rotten Tomatoes, or age rating (optional)
+Description: Plot summary - can be multiple lines (optional)
+
+===================================================
+TIPS
+===================================================
+
+1. Keep title concise and accurate
+2. Use comma-separated genres (no "and")
+3. Rating can be IMDb score (8.5) or age rating (PG-13)
+4. Description should be engaging but spoiler-free
+5. For series, include season and episode: "S01E01 - Episode Title"
+6. Use consistent formatting across all uploads
+7. You can add custom fields if needed
+
+===================================================
+MINIMAL CAPTION (If You're Lazy)
+===================================================
+
+Title: Movie Name
+Year: 2024
+Genre: Action
+Rating: N/A
+Description: No description available.
+
+Note: The app will use the filename if no caption is provided,
+      but having proper metadata makes browsing much better!
+
+===================================================

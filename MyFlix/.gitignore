@@ -1,0 +1,80 @@
+# MyFlix - Git Ignore File
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Pyrogram Session Files
+*.session
+*.session-journal
+myflix_bot.session*
+
+# Cache Directory
+cache/
+*.json
+
+# Temporary Downloads
+temp_downloads/
+*.mp4
+*.mkv
+*.avi
+
+# Environment Variables
+.env
+.env.local
+.env.*.local
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Logs
+*.log
+logs/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Flask
+instance/
+.webassets-cache
+
+# Thumbnails (if locally cached)
+static/thumbnails/*.jpg
+static/thumbnails/*.png
+!static/thumbnails/.gitkeep
+
+# Config (if sensitive)
+# Uncomment if you store secrets in config.py
+# config.py
+
+# Deployment
+*.pid
+*.sock

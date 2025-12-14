@@ -1,0 +1,315 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Marcus Chen - Creative Developer Portfolio | Crafting immersive digital experiences through code and design">
+  <meta name="keywords" content="creative developer, portfolio, web development, UI/UX, React, Next.js, interactive design">
+  <meta name="author" content="Marcus Chen">
+  <meta property="og:title" content="Marcus Chen | Creative Developer">
+  <meta property="og:description" content="Crafting immersive digital experiences through code and design">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>Marcus Chen | Creative Developer Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Loader -->
+  <div id="loader">
+    <div class="loader-content">
+      <div class="loader-bar">
+        <div class="loader-progress"></div>
+      </div>
+      <div class="loader-text">Loading</div>
+    </div>
+  </div>
+
+  <!-- Navigation -->
+  <nav id="nav">
+    <a href="#hero" class="nav-logo">marcus.dev</a>
+    <ul class="nav-links">
+      <li><a href="#hero" class="nav-link active" data-section="hero">Home</a></li>
+      <li><a href="#projects" class="nav-link" data-section="projects">Projects</a></li>
+      <li><a href="#about" class="nav-link" data-section="about">About</a></li>
+      <li><a href="#achievements" class="nav-link" data-section="achievements">Achievements</a></li>
+      <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="theme-btn" id="theme-btn" title="Toggle theme">🌙</button>
+      <button class="admin-link" id="admin-btn">Admin</button>
+      <button class="mobile-toggle" id="mobile-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+    <!-- Hero -->
+    <section id="hero">
+      <div class="hero-content">
+        <div class="hero-text">
+          <div class="hero-label">Available for projects</div>
+          <h1 class="hero-title">
+            <span class="line"><span class="word">Creative</span></span>
+            <span class="line"><span class="word highlight">Developer</span></span>
+            <span class="line"><span class="word">& Designer</span></span>
+          </h1>
+          <p class="hero-desc">
+            I craft immersive digital experiences that blend cutting-edge technology with thoughtful design. Specializing in interactive web applications and creative development.
+          </p>
+          <div class="hero-cta">
+            <a href="#projects" class="btn btn-primary">View Projects →</a>
+            <a href="#contact" class="btn btn-secondary">Let's Talk</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-image profile-img" id="profile-image" title="Click to upload profile image">👨‍💻</div>
+          <div class="hero-stats">
+            <div class="stat-card">
+              <div class="stat-value" data-count="50">0</div>
+              <div class="stat-label">Projects Completed</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" data-count="8">0</div>
+              <div class="stat-label">Years Experience</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value" data-count="35">0</div>
+              <div class="stat-label">Happy Clients</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="projects">
+      <div class="section-header fade-in">
+        <span class="section-label">Selected Work</span>
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-desc">A curated collection of my best work across various domains and technologies.</p>
+      </div>
+      <div class="projects-filters fade-in" id="filters"></div>
+      <div class="projects-grid" id="projects-grid"></div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <div class="section-header fade-in">
+        <span class="section-label">About Me</span>
+        <h2 class="section-title">Background & Experience</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-content fade-in">
+          <h3>Hello, I'm Marcus Chen</h3>
+          <p class="about-text" id="about-text"></p>
+          <div class="about-info">
+            <div class="info-item">
+              <div class="info-label">Location</div>
+              <div class="info-value" id="info-location"></div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Email</div>
+              <div class="info-value" id="info-email"></div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Experience</div>
+              <div class="info-value" id="info-experience"></div>
+            </div>
+            <div class="info-item">
+              <div class="info-label">Status</div>
+              <div class="info-value" id="info-status"></div>
+            </div>
+          </div>
+          <div class="skills-section">
+            <h4>Technologies</h4>
+            <div class="skills-grid" id="skills-grid"></div>
+          </div>
+          <a href="#" class="btn btn-primary" style="margin-top: 32px;" id="download-cv">Download Resume →</a>
+        </div>
+        <div class="timeline fade-in" id="timeline"></div>
+      </div>
+    </section>
+
+    <!-- Achievements -->
+    <section id="achievements">
+      <div class="section-header fade-in">
+        <span class="section-label">Recognition</span>
+        <h2 class="section-title">Achievements & Certifications</h2>
+        <p class="section-desc">Awards, certifications, and recognition from my professional journey.</p>
+      </div>
+      <div class="achievements-container">
+        <div class="achievements-list fade-in" id="achievements-list"></div>
+        <div class="certificates-list fade-in" id="certificates-list"></div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="section-header fade-in">
+        <span class="section-label">Get In Touch</span>
+        <h2 class="section-title">Let's Work Together</h2>
+        <p class="section-desc">Have a project in mind? Let's create something amazing together.</p>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-cards fade-in">
+          <div class="contact-card">
+            <div class="contact-icon">📧</div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-value">marcus@example.com</div>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">📍</div>
+            <div>
+              <div class="contact-label">Location</div>
+              <div class="contact-value">San Francisco, CA</div>
+            </div>
+          </div>
+          <div class="contact-card">
+            <div class="contact-icon">📱</div>
+            <div>
+              <div class="contact-label">Phone</div>
+              <div class="contact-value">+1 (555) 123-4567</div>
+            </div>
+          </div>
+        </div>
+        <div class="contact-form fade-in">
+          <h3 class="form-title">Send a Message</h3>
+          <form id="contact-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-input" placeholder="Your name" required id="contact-name">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" placeholder="your@email.com" required id="contact-email">
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Subject</label>
+                <input type="text" class="form-input" placeholder="What's this about?" required id="contact-subject">
+              </div>
+              <div class="form-group full">
+                <label class="form-label">Message</label>
+                <textarea class="form-textarea" placeholder="Tell me about your project..." required id="contact-message"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="form-submit">Send Message →</button>
+            <div class="form-success" id="form-success">Message sent successfully! I'll get back to you soon.</div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <p class="footer-text">© 2025 Marcus Chen. All rights reserved.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-link" target="_blank" title="GitHub">GH</a>
+        <a href="#" class="social-link" target="_blank" title="LinkedIn">LI</a>
+        <a href="#" class="social-link" target="_blank" title="Twitter">TW</a>
+        <a href="#" class="social-link" target="_blank" title="Dribbble">DR</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Project Modal -->
+  <div class="modal-backdrop" id="project-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modal-title"></h3>
+        <button class="modal-close" id="modal-close">×</button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-image" id="modal-image"></div>
+        <p class="modal-desc" id="modal-desc"></p>
+        <div class="project-tech" id="modal-tech"></div>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn btn-secondary" id="modal-repo" target="_blank">View Code</a>
+        <a href="#" class="btn btn-primary" id="modal-demo" target="_blank">Live Demo →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="login-modal" id="login-modal">
+    <div class="login-card">
+      <h2 class="login-title">Admin Login</h2>
+      <p class="login-subtitle">Enter your credentials to continue</p>
+      <div class="login-error" id="login-error">Invalid credentials</div>
+      <form id="login-form">
+        <div class="form-group" style="margin-bottom: 16px;">
+          <label class="form-label">Username</label>
+          <input type="text" class="form-input" id="login-user" required>
+        </div>
+        <div class="form-group" style="margin-bottom: 24px;">
+          <label class="form-label">Password</label>
+          <input type="password" class="form-input" id="login-pass" required>
+        </div>
+        <button type="submit" class="form-submit">Sign In</button>
+        <button type="button" class="btn btn-secondary" style="width: 100%; margin-top: 12px;" id="login-cancel">Cancel</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin Panel -->
+  <div class="admin-panel" id="admin-panel">
+    <div class="admin-sidebar">
+      <div class="admin-brand">
+        <div class="admin-brand-icon">M</div>
+        <div class="admin-brand-text">Admin Panel</div>
+      </div>
+      <div class="admin-nav">
+        <button class="admin-nav-btn active" data-view="projects">📁 Projects</button>
+        <button class="admin-nav-btn" data-view="skills">⚡ Skills</button>
+        <button class="admin-nav-btn" data-view="timeline">📅 Timeline</button>
+        <button class="admin-nav-btn" data-view="achievements">🏆 Achievements</button>
+        <button class="admin-nav-btn" data-view="certificates">📜 Certificates</button>
+        <button class="admin-nav-btn" data-view="uploads">📸 Uploads</button>
+        <button class="admin-nav-btn" data-view="about">👤 About</button>
+        <button class="admin-nav-btn" data-view="hero">🏠 Hero</button>
+        <button class="admin-nav-btn" data-view="contact">📧 Contact</button>
+        <button class="admin-nav-btn" data-view="settings">⚙️ Settings</button>
+      </div>
+      <div class="admin-logout">
+        <button class="admin-nav-btn" id="admin-logout">🚪 Logout</button>
+      </div>
+    </div>
+    <div class="admin-main">
+      <div class="admin-header">
+        <h1 class="admin-page-title" id="admin-title">Projects</h1>
+        <button class="admin-add-btn" id="admin-add-btn">+ Add New</button>
+      </div>
+      <div id="admin-content"></div>
+    </div>
+  </div>
+
+  <!-- Admin Form Modal -->
+  <div class="admin-form-modal" id="admin-form-modal">
+    <div class="admin-form-card">
+      <div class="admin-form-header">
+        <h3 id="admin-form-title">Add Project</h3>
+        <button class="modal-close" id="admin-form-close">×</button>
+      </div>
+      <div class="admin-form-body" id="admin-form-body"></div>
+      <div class="admin-form-footer">
+        <button class="btn btn-secondary" id="admin-form-cancel">Cancel</button>
+        <button class="btn btn-primary" id="admin-form-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

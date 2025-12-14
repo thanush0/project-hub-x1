@@ -1,0 +1,27 @@
+# MyFlix - Python Dependencies
+# Telegram Streaming Platform
+
+# Core Framework
+Flask==2.3.3
+Werkzeug==2.3.7
+
+# Telegram API
+Pyrogram==2.0.106
+TgCrypto==1.2.5
+
+# HTTP Requests
+requests==2.31.0
+
+# Async Support
+
+# Environment Variables (Optional)
+python-dotenv==1.0.0
+
+# Production Server
+gunicorn==21.2.0
+
+# JSON Handling (Built-in, listed for reference)
+# json (built-in)
+
+# Date/Time Utilities (Built-in, listed for reference)
+# datetime (built-in)

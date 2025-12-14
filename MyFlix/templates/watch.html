@@ -1,0 +1,321 @@
+{% extends "base.html" %}
+
+{% block title %}{{ movie.title }} - MyFlix{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Full-screen video player styles */
+    .watch-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    
+    .video-wrapper {
+        position: relative;
+        background: #000;
+        border-radius: 8px;
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+    
+    .video-player {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background: #000;
+    }
+    
+    video {
+        width: 100%;
+        height: 100%;
+        outline: none;
+    }
+    
+    .video-controls {
+        display: flex;
+        gap: 10px;
+        padding: 15px 0;
+        flex-wrap: wrap;
+    }
+    
+    .control-btn {
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 14px;
+    }
+    
+    .control-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.4);
+    }
+    
+    .movie-details {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+        padding: 30px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .movie-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 20px;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .movie-title-large {
+        font-size: 2.5em;
+        font-weight: 700;
+        margin: 0;
+        color: #fff;
+    }
+    
+    .movie-meta-info {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+        color: rgba(255, 255, 255, 0.8);
+    }
+    
+    .meta-badge {
+        background: rgba(229, 9, 20, 0.2);
+        color: #e50914;
+        padding: 5px 12px;
+        border-radius: 4px;
+        font-weight: 600;
+        font-size: 14px;
+    }
+    
+    .genre-tags {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 20px;
+    }
+    
+    .genre-tag {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.9);
+    }
+    
+    .movie-description {
+        line-height: 1.6;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 16px;
+    }
+    
+    .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s;
+        margin-bottom: 20px;
+    }
+    
+    .back-button:hover {
+        background: rgba(255, 255, 255, 0.2);
+    }
+    
+    @media (max-width: 768px) {
+        .movie-title-large {
+            font-size: 1.8em;
+        }
+        
+        .watch-container {
+            padding: 10px;
+        }
+        
+        .movie-details {
+            padding: 20px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="watch-container">
+    <a href="/" class="back-button">
+        ← Back to Home
+    </a>
+    
+    <!-- Video Player -->
+    <div class="video-wrapper">
+        <div class="video-player">
+            <video id="videoPlayer" controls preload="metadata" controlsList="nodownload">
+                <source src="/stream/{{ movie.message_id }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+    
+    <!-- Custom Controls -->
+    <div class="video-controls">
+        <button class="control-btn" onclick="skipIntro()">⏩ Skip Intro (90s)</button>
+        <button class="control-btn" onclick="skipToEnd()">⏭️ Skip to End</button>
+        <button class="control-btn" onclick="rewind10()">⏪ -10s</button>
+        <button class="control-btn" onclick="forward10()">⏩ +10s</button>
+        <button class="control-btn" onclick="toggleFullscreen()">⛶ Fullscreen</button>
+    </div>
+    
+    <!-- Movie Details -->
+    <div class="movie-details">
+        <div class="movie-header">
+            <div>
+                <h1 class="movie-title-large">{{ movie.title }}</h1>
+                <div class="movie-meta-info">
+                    <span class="meta-badge">⭐ {{ movie.rating }}</span>
+                    <span>📅 {{ movie.year }}</span>
+                    <span>🕐 {{ movie.duration_formatted }}</span>
+                    <span>💾 {{ movie.file_size_formatted }}</span>
+                </div>
+            </div>
+        </div>
+        
+        {% if movie.genre %}
+        <div class="genre-tags">
+            {% for genre in movie.genre %}
+            <span class="genre-tag">{{ genre }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+        
+        {% if movie.description %}
+        <p class="movie-description">{{ movie.description }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+const videoPlayer = document.getElementById('videoPlayer');
+const movieId = {{ movie.message_id }};
+
+// Resume playback from last position
+document.addEventListener('DOMContentLoaded', function() {
+    const savedTime = localStorage.getItem(`movie_${movieId}_time`);
+    if (savedTime && savedTime > 0) {
+        videoPlayer.currentTime = parseFloat(savedTime);
+        console.log(`Resuming from ${savedTime}s`);
+    }
+});
+
+// Save playback position every 5 seconds
+let saveInterval;
+videoPlayer.addEventListener('play', function() {
+    saveInterval = setInterval(() => {
+        localStorage.setItem(`movie_${movieId}_time`, videoPlayer.currentTime);
+    }, 5000);
+});
+
+videoPlayer.addEventListener('pause', function() {
+    clearInterval(saveInterval);
+    localStorage.setItem(`movie_${movieId}_time`, videoPlayer.currentTime);
+});
+
+// Mark as complete when near the end
+videoPlayer.addEventListener('timeupdate', function() {
+    const timeLeft = videoPlayer.duration - videoPlayer.currentTime;
+    if (timeLeft < 30 && timeLeft > 0) {
+        // Could implement "mark as watched" functionality here
+    }
+});
+
+// Clear saved time when video ends
+videoPlayer.addEventListener('ended', function() {
+    localStorage.removeItem(`movie_${movieId}_time`);
+    console.log('Movie finished, cleared saved position');
+});
+
+// Custom control functions
+function skipIntro() {
+    videoPlayer.currentTime = Math.min(videoPlayer.currentTime + 90, videoPlayer.duration);
+}
+
+function skipToEnd() {
+    videoPlayer.currentTime = Math.max(videoPlayer.duration - 30, 0);
+}
+
+function rewind10() {
+    videoPlayer.currentTime = Math.max(videoPlayer.currentTime - 10, 0);
+}
+
+function forward10() {
+    videoPlayer.currentTime = Math.min(videoPlayer.currentTime + 10, videoPlayer.duration);
+}
+
+function toggleFullscreen() {
+    if (!document.fullscreenElement) {
+        videoPlayer.requestFullscreen().catch(err => {
+            console.error('Error attempting to enable fullscreen:', err);
+        });
+    } else {
+        document.exitFullscreen();
+    }
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown', function(e) {
+    // Don't trigger if typing in an input
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+        return;
+    }
+    
+    switch(e.key) {
+        case ' ':
+        case 'k':
+            e.preventDefault();
+            videoPlayer.paused ? videoPlayer.play() : videoPlayer.pause();
+            break;
+        case 'f':
+            e.preventDefault();
+            toggleFullscreen();
+            break;
+        case 'ArrowLeft':
+            e.preventDefault();
+            rewind10();
+            break;
+        case 'ArrowRight':
+            e.preventDefault();
+            forward10();
+            break;
+        case 'ArrowUp':
+            e.preventDefault();
+            videoPlayer.volume = Math.min(videoPlayer.volume + 0.1, 1);
+            break;
+        case 'ArrowDown':
+            e.preventDefault();
+            videoPlayer.volume = Math.max(videoPlayer.volume - 0.1, 0);
+            break;
+        case 'm':
+            e.preventDefault();
+            videoPlayer.muted = !videoPlayer.muted;
+            break;
+    }
+});
+
+// Error handling
+videoPlayer.addEventListener('error', function(e) {
+    console.error('Video playback error:', e);
+    alert('Error loading video. Please try refreshing the page.');
+});
+</script>
+{% endblock %}

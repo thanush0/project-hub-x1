@@ -1,0 +1,10 @@
+{
+  "name": "project-hub-x-cms-admin",
+  "private": true,
+  "scripts": {
+    "cms": "npx decap-server"
+  },
+  "devDependencies": {
+    "decap-server": "^3.0.0"
+  }
+}

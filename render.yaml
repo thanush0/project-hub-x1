@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: project-hub-x
+    env: node
+    plan: free
+    rootDir: .
+    buildCommand: |
+      npm install
+      npm --prefix project-hub-x install
+      node tools/generate-mockdata-from-content.mjs || echo "Generator skipped"
+    startCommand: |
+      npx --yes astro@latest dev --root project-hub-x --port $PORT --host
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 18

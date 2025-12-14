@@ -1,0 +1,23 @@
+{
+  "name": "project-hub-x-workspace",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "setup": "npm --prefix cms-admin install && npm --prefix project-hub-x install",
+    "sync:once": "node tools/generate-mockdata-from-content.mjs",
+    "sync:watch": "chokidar \"content/**/*\" -c \"node tools/generate-mockdata-from-content.mjs\"",
+    "cms:server": "npm --prefix cms-admin run cms",
+    "cms:serve": "http-server cms-admin -p 5500 -c-1 --cors",
+    "web": "npm --prefix project-hub-x run dev",
+    "dev": "concurrently -k -n cms,serve,syncOnce,watch,web \"npm:cms:server\" \"npm:cms:serve\" \"npm:sync:once\" \"npm:sync:watch\" \"npm:web\""
+  },
+  "devDependencies": {
+    "chokidar-cli": "^3.0.0",
+    "concurrently": "^9.0.1",
+    "http-server": "^14.1.1",
+    "npm-run-all": "^4.1.5",
+    "gray-matter": "^4.0.3"
+  }
+}
