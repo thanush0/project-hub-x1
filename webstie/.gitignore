@@ -37,3 +37,7 @@ temp/
 # Uploads (keep structure, ignore files)
 project-hub-x/public/uploads/*
 !project-hub-x/public/uploads/.gitkeep
+
+# Executables
+*.exe
+acli.exe
