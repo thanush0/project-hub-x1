@@ -1,0 +1,96 @@
+# Decap CMS Configuration
+backend:
+  name: git-gateway
+  branch: main
+
+# Publish mode
+publish_mode: editorial_workflow
+
+# Media files
+media_folder: "project-hub-x/public/uploads"
+public_folder: "/uploads"
+
+# Collections
+collections:
+  # Ready-made Projects
+  - name: "projects"
+    label: "Projects"
+    folder: "content/projects"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Price", name: "price", widget: "number"}
+      - {label: "Category", name: "category", widget: "string"}
+      - {label: "Image", name: "image", widget: "image", required: false}
+      - {label: "Features", name: "features", widget: "list"}
+      - {label: "Published", name: "published", widget: "boolean", default: true}
+      - {label: "Created Date", name: "createdDate", widget: "datetime"}
+
+  # FAQ
+  - name: "faq"
+    label: "FAQ"
+    folder: "content/faq"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Question", name: "question", widget: "string"}
+      - {label: "Answer", name: "answer", widget: "text"}
+      - {label: "Order", name: "order", widget: "number", default: 1}
+      - {label: "Published", name: "published", widget: "boolean", default: true}
+
+  # Client Testimonials
+  - name: "testimonials"
+    label: "Testimonials"
+    folder: "content/testimonials"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Client Name", name: "clientName", widget: "string"}
+      - {label: "Company", name: "company", widget: "string", required: false}
+      - {label: "Testimonial", name: "testimonial", widget: "text"}
+      - {label: "Rating", name: "rating", widget: "number", min: 1, max: 5, default: 5}
+      - {label: "Avatar", name: "avatar", widget: "image", required: false}
+      - {label: "Published", name: "published", widget: "boolean", default: true}
+
+  # How It Works Steps
+  - name: "steps"
+    label: "How It Works Steps"
+    folder: "content/steps"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Order", name: "order", widget: "number"}
+      - {label: "Icon", name: "icon", widget: "string", default: "star"}
+      - {label: "Published", name: "published", widget: "boolean", default: true}
+
+  # Developer Profiles
+  - name: "developers"
+    label: "Developer Profiles"
+    folder: "content/developers"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Name", name: "name", widget: "string"}
+      - {label: "Role", name: "role", widget: "string"}
+      - {label: "Bio", name: "bio", widget: "text"}
+      - {label: "Skills", name: "skills", widget: "list"}
+      - {label: "Avatar", name: "avatar", widget: "image", required: false}
+      - {label: "Published", name: "published", widget: "boolean", default: true}
+
+  # Custom Project Requests
+  - name: "requests"
+    label: "Project Requests"
+    folder: "content/requests"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Client Name", name: "clientName", widget: "string"}
+      - {label: "Email", name: "email", widget: "string"}
+      - {label: "Project Description", name: "projectDescription", widget: "text"}
+      - {label: "Budget", name: "budget", widget: "string", required: false}
+      - {label: "Status", name: "status", widget: "select", options: ["pending", "in-progress", "completed"], default: "pending"}
+      - {label: "Submitted Date", name: "submittedDate", widget: "datetime"}

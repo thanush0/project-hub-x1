@@ -1,0 +1,52 @@
+name: Content Sync
+
+on:
+  # Trigger on push to content folder
+  push:
+    paths:
+      - 'content/**'
+    branches:
+      - main
+  
+  # Allow manual trigger
+  workflow_dispatch:
+
+jobs:
+  sync-content:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          fetch-depth: 0
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: Generate mockData from content
+        run: |
+          echo "🚀 Generating mockData from CMS content..."
+          node tools/generate-mockdata-from-content.mjs
+      
+      - name: Check for changes
+        id: check_changes
+        run: |
+          git diff --exit-code project-hub-x/integrations/cms/mock-data.ts || echo "changes=true" >> $GITHUB_OUTPUT
+      
+      - name: Commit and push changes
+        if: steps.check_changes.outputs.changes == 'true'
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add project-hub-x/integrations/cms/mock-data.ts
+          git commit -m "🤖 Auto-sync: Update mockData from CMS content"
+          git push
+      
+      - name: No changes detected
+        if: steps.check_changes.outputs.changes != 'true'
+        run: |
+          echo "✅ No changes detected in mockData"
