@@ -19,14 +19,19 @@ collections:
     create: true
     slug: "{{slug}}"
     fields:
-      - {label: "Title", name: "title", widget: "string"}
-      - {label: "Description", name: "description", widget: "text"}
-      - {label: "Price", name: "price", widget: "number"}
-      - {label: "Category", name: "category", widget: "string"}
-      - {label: "Image", name: "image", widget: "image", required: false}
-      - {label: "Features", name: "features", widget: "list"}
+      - {label: "Project Name", name: "projectName", widget: "string", required: true}
+      - {label: "Description", name: "description", widget: "text", required: true}
+      - {label: "Category", name: "category", widget: "string", required: true}
+      - {label: "Price", name: "price", widget: "number", required: false}
+      - {label: "Tech Stack", name: "techStack", widget: "string", hint: "Comma-separated: React, Node.js, MongoDB"}
+      - {label: "Screenshot 1", name: "screenshot1", widget: "image", required: false}
+      - {label: "Screenshot 2", name: "screenshot2", widget: "image", required: false}
+      - {label: "Features", name: "features", widget: "text", hint: "One feature per line"}
+      - {label: "Deliverables", name: "deliverables", widget: "text", required: false}
+      - {label: "Demo Video Link", name: "demoVideoLink", widget: "string", required: false}
+      - {label: "Is Featured", name: "isFeatured", widget: "boolean", default: false}
       - {label: "Published", name: "published", widget: "boolean", default: true}
-      - {label: "Created Date", name: "createdDate", widget: "datetime"}
+      - {label: "Created Date", name: "createdDate", widget: "datetime", default: "{{now}}"}
 
   # FAQ
   - name: "faq"

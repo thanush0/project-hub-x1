@@ -95,6 +95,16 @@ function readContentFromDir(dirPath) {
       data._createdDate = data.createdDate || new Date().toISOString();
       data._updatedDate = new Date().toISOString();
       
+      // Handle multi-line text fields (features, deliverables)
+      if (typeof data.features === 'string' && data.features.includes('\n')) {
+        data.features = data.features.split('\n').filter(f => f.trim()).join('\n');
+      }
+      
+      // Convert text features to array for compatibility
+      if (typeof data.features === 'string') {
+        data.featuresArray = data.features.split('\n').filter(f => f.trim());
+      }
+      
       // Only include published items
       if (data.published !== false) {
         items.push(data);

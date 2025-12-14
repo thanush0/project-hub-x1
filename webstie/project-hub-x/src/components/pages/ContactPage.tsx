@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { submitContactForm } from '@/services/api';
+import { useToast } from '@/hooks/use-toast';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -30,14 +32,24 @@ export default function ContactPage() {
     e.preventDefault();
     setSubmitting(true);
 
-    setTimeout(() => {
+    try {
+      const response = await submitContactForm(formData);
+      
       toast({
         title: 'Message Sent!',
-        description: 'Thank you for contacting us. We will get back to you soon.',
+        description: response.message || 'Thank you for contacting us. We will get back to you soon.',
       });
+      
       setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch (error) {
+      toast({
+        title: 'Error',
+        description: error instanceof Error ? error.message : 'Failed to send message. Please try again.',
+        variant: 'destructive',
+      });
+    } finally {
       setSubmitting(false);
-    }, 1000);
+    }
   };
 
   return (

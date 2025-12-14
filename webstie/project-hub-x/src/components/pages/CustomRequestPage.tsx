@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { submitCustomRequest } from '@/services/api';
 import { BaseCrudService } from '@/integrations';
 import { CustomProjectRequests } from '@/entities';
 import { Button } from '@/components/ui/button';
@@ -40,8 +41,11 @@ export default function CustomRequestPage() {
     setSubmitting(true);
 
     try {
+      // Submit via API
+      const response = await submitCustomRequest(formData);
+      
+      // Also save locally for dashboard
       await BaseCrudService.create<CustomProjectRequests>('customprojectrequests', {
-        _id: crypto.randomUUID(),
         ...formData,
         requestStatus: 'Pending',
         deadline: formData.deadline ? new Date(formData.deadline).toISOString() : undefined,
@@ -50,12 +54,12 @@ export default function CustomRequestPage() {
       setSubmitted(true);
       toast({
         title: 'Request Submitted!',
-        description: 'We will review your request and get back to you soon.',
+        description: response.message || 'We will review your request and get back to you soon.',
       });
     } catch (error) {
       toast({
         title: 'Error',
-        description: 'Failed to submit request. Please try again.',
+        description: error instanceof Error ? error.message : 'Failed to submit request. Please try again.',
         variant: 'destructive',
       });
     } finally {
