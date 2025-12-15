@@ -71,6 +71,7 @@ Access at: `http://localhost:3000`
 | **[PROJECT_STRUCTURE.md](PROJECT_STRUCTURE.md)** | Architecture overview | Developers |
 | **[cms-admin/README.md](cms-admin/README.md)** | CMS usage guide | Content Editors |
 | **[tools/README.md](tools/README.md)** | Generator script docs | Developers |
+| **[EMAIL_SETUP_GUIDE.md](EMAIL_SETUP_GUIDE.md)** | Email provider configuration and testing | DevOps/Developers |
 
 ---
 

@@ -198,6 +198,17 @@ Edit Content  →  Commit to GitHub  →  Auto Sync  →  Live Site
 
 ---
 
+## 5️⃣ EMAIL SETUP (Optional but Recommended)
+
+Configure email for contact form and custom request notifications.
+
+- Read: EMAIL_SETUP_GUIDE.md
+- Choose provider: SendGrid, Mailgun, or SMTP
+- Set environment variables in Netlify (and Render if needed)
+- Test using tools/test-email-functions.mjs
+
+---
+
 ## 5️⃣ POST-DEPLOYMENT VERIFICATION
 
 ### Checklist

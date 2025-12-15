@@ -1,0 +1,49 @@
+Title: feat(functions): add multi-provider email service and wire up contact/custom request handlers
+
+Summary
+- Introduces provider-agnostic email service (SendGrid, Mailgun, SMTP via Nodemailer) with development-mode logging fallback.
+- Updates Netlify functions:
+  - contact-form.ts: validation, admin notification
+  - custom-request.ts: requestId, admin notification, client confirmation, optional SAVE_REQUESTS_TO_GIT
+- Adds environment variable documentation and complete guide (EMAIL_SETUP_GUIDE.md)
+- Adds test tooling for local and deployed verification
+
+Changes
+- netlify/functions/services/email-service.ts (new)
+- netlify/functions/contact-form.ts (updated)
+- netlify/functions/custom-request.ts (updated)
+- project-hub-x/.env.example (updated)
+- README.md, DEPLOYMENT_GUIDE.md, DEPLOYMENT_READY.md, PHASE_1_COMPLETE.md (updated)
+- tools/test-email-functions.mjs (new)
+- tools/test-email-service-local.mjs (new)
+- package.json at repo root: add nodemailer dep for SMTP
+
+How to test
+1) Local (development mode)
+- Ensure ADMIN_EMAIL and FROM_EMAIL are set
+- Run: netlify dev --port 8888
+- In another terminal: node tools/test-email-functions.mjs http://localhost:8888
+- Expect: 200 responses; function logs show "Email would be sent (no provider configured)"
+
+2) Deployed
+- Set env vars in Netlify according to EMAIL_SETUP_GUIDE.md
+- Run: node tools/test-email-functions.mjs https://<your-site>.netlify.app
+- Expect: 200 responses; actual emails delivered if provider configured
+
+Configuration
+- EMAIL_PROVIDER: sendgrid | mailgun | smtp | (empty = development)
+- SendGrid: SENDGRID_API_KEY
+- Mailgun: MAILGUN_API_KEY, MAILGUN_DOMAIN
+- SMTP: SMTP_HOST, SMTP_PORT, SMTP_SECURE, SMTP_USER, SMTP_PASSWORD
+- ADMIN_EMAIL, FROM_EMAIL
+- Optional: SAVE_REQUESTS_TO_GIT=true
+
+Notes
+- No breaking changes; functions gracefully degrade when email not configured
+- SMTP requires nodemailer (provided via root package.json)
+
+Checklist
+- [x] Functions compile and run locally
+- [x] Docs updated with EMAIL_SETUP_GUIDE.md and pointers
+- [x] Env example updated
+- [x] Tests added (tools)

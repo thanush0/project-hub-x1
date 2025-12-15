@@ -114,7 +114,10 @@ Add these to Netlify:
 
 ```env
 # Email Configuration (for production)
+EMAIL_PROVIDER=sendgrid
 SENDGRID_API_KEY=your_sendgrid_key
+FROM_EMAIL=noreply@example.com
+ADMIN_EMAIL=admin@example.com
 ADMIN_EMAIL=admin@projecthubx.com
 FROM_EMAIL=noreply@projecthubx.com
 

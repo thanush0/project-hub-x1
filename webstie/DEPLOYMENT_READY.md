@@ -352,6 +352,7 @@ Your deployment is successful when:
 ## 📞 Need Help?
 
 **Documentation:**
+- Email setup: See EMAIL_SETUP_GUIDE.md for provider config and testing
 - PHASE_1_COMPLETE.md - What was fixed
 - PROJECT_ANALYSIS_AND_FIXES.md - Detailed analysis
 - DEPLOYMENT_CHECKLIST_INTERACTIVE.md - Step-by-step guide
