@@ -40,11 +40,19 @@ export default function AdminDashboardPage() {
 
   const loadPages = () => {
     const allPages = ContentStore.getAllPages();
+    // Filter to show only draft versions
     const draftPages = allPages.filter(p => p._status === 'draft');
     setPages(draftPages);
     
-    if (draftPages.length > 0) {
+    // Auto-select first page
+    if (draftPages.length > 0 && !selectedPage) {
       setSelectedPage(draftPages[0]);
+    } else if (selectedPage) {
+      // Refresh selected page data
+      const updatedPage = draftPages.find(p => p.pageId === selectedPage.pageId);
+      if (updatedPage) {
+        setSelectedPage(updatedPage);
+      }
     }
   };
 

@@ -4,6 +4,8 @@
  */
 
 import { PageContent, PageContentCache, ContentVersion, MediaAsset } from './types';
+import { PAGE_REGISTRY } from './page-registry';
+import { generateInitialContent } from './content-scanner';
 
 // ============================================
 // IN-MEMORY STORAGE (Replace with DB in production)
@@ -57,8 +59,34 @@ export const ContentStore = {
 
   /**
    * Get all pages (both draft and published)
+   * Initializes pages from PAGE_REGISTRY if they don't exist
    */
   getAllPages(): PageContent[] {
+    // Ensure all registered pages have entries
+    PAGE_REGISTRY.forEach(pageEntry => {
+      const draftKey = `${pageEntry.pageId}_draft`;
+      const publishedKey = `${pageEntry.pageId}_published`;
+      
+      if (!pageContents.has(draftKey)) {
+        // Initialize draft with default content
+        const initialContent = generateInitialContent(
+          pageEntry.pageId,
+          pageEntry.pageName
+        );
+        pageContents.set(draftKey, initialContent);
+      }
+      
+      if (!pageContents.has(publishedKey)) {
+        // Initialize published content (copy from draft or create new)
+        const draftContent = pageContents.get(draftKey);
+        if (draftContent) {
+          const publishedContent = { ...draftContent, _status: 'published' as const };
+          pageContents.set(publishedKey, publishedContent);
+          this.rebuildPublishedCache(pageEntry.pageId);
+        }
+      }
+    });
+    
     return Array.from(pageContents.values());
   },
 
@@ -156,10 +184,57 @@ export const ContentStore = {
 
   /**
    * Get published content mapping (used for runtime content injection)
+   * Supports both direct content and nested field structures
    */
   getPublishedMapping(pageId: string): Record<string, string | null> {
     const cache = publishedCache.get(pageId);
-    return cache?.mapping || {};
+    if (cache) {
+      return cache.mapping;
+    }
+    
+    // Build mapping from published content
+    const page = this.getPageContent(pageId, 'published');
+    if (!page) {
+      return {};
+    }
+    
+    const mapping: Record<string, string | null> = {};
+    
+    // Map all content fields (supports nested objects)
+    if (page.content) {
+      this.flattenObject(page.content, '', mapping);
+    }
+    
+    // Map media fields
+    if (page.media) {
+      Object.entries(page.media).forEach(([key, value]) => {
+        mapping[key] = value as string;
+      });
+    }
+    
+    return mapping;
+  },
+
+  /**
+   * Flatten nested object into dot notation keys
+   * Example: {hero: {title: "Hello"}} => {"hero.title": "Hello"}
+   */
+  flattenObject(
+    obj: any,
+    prefix: string,
+    result: Record<string, string | null>
+  ): void {
+    Object.entries(obj).forEach(([key, value]) => {
+      const fullKey = prefix ? `${prefix}.${key}` : key;
+      
+      if (value && typeof value === 'object' && !Array.isArray(value)) {
+        // Recursively flatten nested objects
+        this.flattenObject(value, fullKey, result);
+      } else {
+        // Store primitive values
+        result[fullKey] = value as string;
+      }
+    });
   },
 
   // -------------------- MEDIA MANAGEMENT --------------------

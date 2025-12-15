@@ -1,4 +1,5 @@
 import { MemberProvider } from '@/integrations';
+import { PageWrapper } from '@/integrations/cms-admin';
 import { createBrowserRouter, RouterProvider, Navigate, Outlet } from 'react-router-dom';
 import { ScrollToTop } from '@/lib/scroll-to-top';
 import { MemberProtectedRoute } from '@/components/ui/member-protected-route';
@@ -14,12 +15,14 @@ import FAQPage from '@/components/pages/FAQPage';
 import AdminLoginPage from '@/components/pages/AdminLoginPage';
 import AdminDashboardPage from '@/components/pages/AdminDashboardPage';
 
-// Layout component that includes ScrollToTop
+// Layout component that includes ScrollToTop and CMS content injection
 function Layout() {
   return (
     <>
       <ScrollToTop />
-      <Outlet />
+      <PageWrapper>
+        <Outlet />
+      </PageWrapper>
     </>
   );
 }

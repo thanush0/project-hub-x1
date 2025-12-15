@@ -2,7 +2,7 @@
  * Admin Login Page
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AdminAuthService } from '@/integrations/cms-admin';
 import { Button } from '@/components/ui/button';
@@ -17,6 +17,14 @@ export default function AdminLoginPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  // Redirect to dashboard if already authenticated
+  useEffect(() => {
+    const session = AdminAuthService.getCurrentSession();
+    if (session) {
+      navigate('/admin', { replace: true });
+    }
+  }, [navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

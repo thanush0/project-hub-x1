@@ -122,10 +122,30 @@ export const AdminAuthService = {
   getCurrentSession(): AdminSession | null {
     if (typeof window === 'undefined') return null;
     
-    const token = localStorage.getItem('admin_token');
-    if (!token) return null;
+    const sessionData = localStorage.getItem('admin_session');
+    if (!sessionData) return null;
 
-    return this.verifyToken(token);
+    try {
+      const session: AdminSession = JSON.parse(sessionData);
+      
+      // Convert expiresAt string back to Date object
+      session.expiresAt = new Date(session.expiresAt);
+      
+      // Check if expired
+      if (new Date() > session.expiresAt) {
+        this.clearSession();
+        return null;
+      }
+
+      // Restore to activeSessions cache for verifyToken
+      activeSessions.set(session.token, session);
+
+      return session;
+    } catch (error) {
+      // Invalid session data, clear it
+      this.clearSession();
+      return null;
+    }
   },
 
   /**
@@ -133,7 +153,12 @@ export const AdminAuthService = {
    */
   saveSession(session: AdminSession): void {
     if (typeof window === 'undefined') return;
-    localStorage.setItem('admin_token', session.token);
+    
+    // Store the entire session object
+    localStorage.setItem('admin_session', JSON.stringify(session));
+    
+    // Also add to in-memory cache
+    activeSessions.set(session.token, session);
   },
 
   /**
@@ -141,6 +166,17 @@ export const AdminAuthService = {
    */
   clearSession(): void {
     if (typeof window === 'undefined') return;
-    localStorage.removeItem('admin_token');
+    
+    const sessionData = localStorage.getItem('admin_session');
+    if (sessionData) {
+      try {
+        const session: AdminSession = JSON.parse(sessionData);
+        activeSessions.delete(session.token);
+      } catch (error) {
+        // Ignore parse errors during cleanup
+      }
+    }
+    
+    localStorage.removeItem('admin_session');
   },
 };

@@ -1,4 +1,5 @@
 import { Handler, HandlerEvent } from '@netlify/functions';
+import { sendEmail, formatContactFormEmail } from './services/email-service';
 
 interface ContactFormData {
   name: string;
@@ -36,10 +37,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
       };
     }
 
-    // TODO: Send email using SendGrid, Mailgun, or SMTP
-    // For now, we'll use Netlify Forms as a backup
-    
-    // Log submission (for development)
+    // Log submission (for development and auditing)
     console.log('Contact form submission:', {
       name: data.name,
       email: data.email,
@@ -47,21 +45,35 @@ export const handler: Handler = async (event: HandlerEvent) => {
       timestamp: new Date().toISOString(),
     });
 
-    // In production, integrate with email service:
-    /*
-    const sgMail = require('@sendgrid/mail');
-    sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-    
-    const msg = {
-      to: process.env.ADMIN_EMAIL,
-      from: process.env.FROM_EMAIL,
-      subject: `Contact Form: ${data.subject}`,
-      text: `From: ${data.name} (${data.email})\n\n${data.message}`,
-      html: `<strong>From:</strong> ${data.name} (${data.email})<br><br>${data.message}`,
-    };
-    
-    await sgMail.send(msg);
-    */
+    // Send email notification to admin
+    const adminEmail = process.env.ADMIN_EMAIL || process.env.TO_EMAIL;
+    const fromEmail = process.env.FROM_EMAIL || process.env.ADMIN_EMAIL;
+
+    if (adminEmail && fromEmail) {
+      const emailContent = formatContactFormEmail(data);
+      
+      const result = await sendEmail({
+        to: adminEmail,
+        from: fromEmail,
+        replyTo: data.email,
+        subject: data.subject ? `Contact Form: ${data.subject}` : 'New Contact Form Submission',
+        text: emailContent.text,
+        html: emailContent.html,
+      });
+
+      if (!result.success) {
+        console.error('Failed to send email notification:', result.error);
+        // Don't fail the request if email fails, just log it
+        // The form submission is still recorded in logs
+      } else {
+        console.log('Email sent successfully:', {
+          provider: result.provider,
+          messageId: result.messageId,
+        });
+      }
+    } else {
+      console.warn('Email not configured: ADMIN_EMAIL and FROM_EMAIL environment variables are not set');
+    }
 
     return {
       statusCode: 200,

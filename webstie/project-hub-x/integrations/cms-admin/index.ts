@@ -19,6 +19,15 @@ export {
   withContentInjection,
 } from './content-injector';
 
+// Page Wrapper
+export { PageWrapper, withCMS } from './page-wrapper';
+
+// Page Registry
+export { PAGE_REGISTRY, getPageByRoute, getPageById, getEnabledPages } from './page-registry';
+
+// Content Scanner
+export { scanPageContent } from './content-scanner';
+
 // Page Definitions
 export {
   homePageDefinition,

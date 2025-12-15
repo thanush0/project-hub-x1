@@ -73,7 +73,7 @@ export default function ContentEditor({ pageContent, onSave, onPublish }: Conten
         section.id === sectionId
           ? {
               ...section,
-              elements: section.elements.map(element =>
+              elements: (section.elements || []).map(element =>
                 element.id === elementId
                   ? { ...element, content: value }
                   : element
