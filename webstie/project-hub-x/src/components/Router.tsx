@@ -11,6 +11,8 @@ import CustomRequestPage from '@/components/pages/CustomRequestPage';
 import ContactPage from '@/components/pages/ContactPage';
 import DashboardPage from '@/components/pages/DashboardPage';
 import FAQPage from '@/components/pages/FAQPage';
+import AdminLoginPage from '@/components/pages/AdminLoginPage';
+import AdminDashboardPage from '@/components/pages/AdminDashboardPage';
 
 // Layout component that includes ScrollToTop
 function Layout() {
@@ -71,6 +73,14 @@ const router = createBrowserRouter([
       {
         path: "refund",
         element: <Navigate to="/" replace />,
+      },
+      {
+        path: "admin/login",
+        element: <AdminLoginPage />,
+      },
+      {
+        path: "admin",
+        element: <AdminDashboardPage />,
       },
       {
         path: "*",

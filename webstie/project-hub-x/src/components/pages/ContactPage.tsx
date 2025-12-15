@@ -9,7 +9,6 @@ import { Label } from '@/components/ui/label';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
-import { useToast } from '@/hooks/use-toast';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
